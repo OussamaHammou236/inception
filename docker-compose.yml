@@ -1,0 +1,28 @@
+services:
+  nginx:
+    build:
+      context: nginx/
+    image: nginx:nginx
+    container_name: nginx
+    restart: always
+    ports:
+      - "443:443"
+    depends_on: 
+      - mariadb
+    networks:
+      - Inception_net
+  mariadb:
+    env_file: mariadb/mariadb.env
+    build:
+      context: mariadb/
+    image: mariadb:mariadb
+    container_name: database
+    restart: always
+    ports:
+      - "3306:3306"
+    networks:
+      - Inception_net
+
+networks:
+  Inception_net:
+    driver: bridge
