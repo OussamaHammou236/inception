@@ -1,10 +1,7 @@
 run:
-	docker build -t nginx-image nginx/
-	docker run -d --name nginx-container -p 443:443 nginx-image
+	docker compose up
 
 fclean:
-	docker stop nginx-container
-	docker rm nginx-container
-	docker rmi nginx-image
+	docker compose down --volumes --rmi all
 
 re: fclean run
