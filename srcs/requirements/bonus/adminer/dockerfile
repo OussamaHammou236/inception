@@ -1,0 +1,14 @@
+FROM debian:bullseye
+
+RUN apt-get update && apt-get install -y \
+    php-fpm \
+    php-mysql \
+    wget
+
+RUN mkdir -p /var/www/html && \
+    wget https://www.adminer.org/latest.php -O /var/www/html/index.php && \
+    chown -R www-data:www-data /var/www/html
+
+COPY www.conf /etc/php/7.4/fpm/pool.d/www.conf
+
+CMD ["php-fpm7.4", "-F"]

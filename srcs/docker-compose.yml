@@ -1,0 +1,110 @@
+services:
+  nginx:
+    build:
+      context: requirements/nginx/
+    image: nginx:nginx
+    depends_on:
+      - mariadb
+    container_name: nginx
+    restart: always
+    ports:
+      - "443:443"
+      - "442:442"
+      - "441:441"
+    networks:
+      - Inception_net
+    volumes:
+      - wordpress-data:/var/www/wordpress
+  mariadb:
+    env_file: keys.env
+    build:
+      context: requirements/mariadb/
+    image: mariadb:mariadb
+    container_name: mariadb
+    restart: always
+    # ports:
+    #   - "3306"
+    networks:
+      - Inception_net
+    volumes:
+      - volume:/var/lib/mysql
+  wordpress:
+    env_file: keys.env
+    depends_on:
+      - mariadb
+    build: 
+      context: requirements/wordpress/
+    image: wordpress:wordpress
+    container_name: wordpress
+    restart: always
+    # ports:
+    #   - "9000"
+    networks:
+      - Inception_net
+    volumes:
+      - wordpress-data:/var/www/wordpress
+  redis:
+    build: 
+      context: requirements/bonus/redis/
+    image: redis:redis
+    container_name: redis
+    restart: always
+    # ports:
+    #   - "6379"
+    networks:
+      - Inception_net
+  ftp:
+    build:
+      context: requirements/bonus/FTP/
+    env_file: keys.env
+    image: ftp:ftp
+    container_name: ftp
+    restart: always
+    ports:
+      - "21:21"
+      - "21000-21010:21000-21010"
+    # depends_on:
+    #   - wordpress
+    networks:
+      - Inception_net
+    volumes:
+      - wordpress-data:/var/www/wordpress
+  # static:
+  #   build: 
+  #     context: requirements/bonus/StaticWebsite/
+  #   image: static:static
+  #   container_name: static
+  #   restart: always
+  #   # expose:
+  #   #   - "442"
+  #   # ports:
+  #   #   - "442:442"
+  #   networks:
+  #     - Inception_net
+  # adminer:
+  #   build: requirements/bonus/adminer/
+  #   image: adminer
+  #   container_name: adminer
+  #   restart: always
+  #   networks:
+  #     - Inception_net
+  #   volumes:
+  #     - wordpress-data:/var/www/html
+
+networks:
+  Inception_net:
+    driver: bridge
+
+volumes:
+  volume:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/ohammou-/volume/mariadb
+  wordpress-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/ohammou-/volume/wordpress

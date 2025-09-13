@@ -1,0 +1,12 @@
+FROM debian:bullseye
+
+RUN     apt update -y && \
+        apt install vsftpd -y
+
+COPY vsftpd.conf /etc/vsftpd.conf
+
+COPY script.sh /usr/local/bin/script.sh
+
+RUN chmod 777 /usr/local/bin/script.sh
+
+CMD ["bash", "/usr/local/bin/script.sh"]

@@ -9,8 +9,8 @@ RUN 	openssl req -x509 -nodes \
 			-keyout /etc/nginx/ssl/inception.key \
 			-out /etc/nginx/ssl/inception.crt \
 			-subj "/C=FR/ST=IDF/L=1337/O=42/OU=42/CN=UserName.42.fr/UID=UserName"
-COPY index.html /usr/share/nginx/html/index.html
-COPY script.sh /home/script.sh
+
+COPY tools/script.sh /home/script.sh
 
 RUN chmod +x /home/script.sh
 

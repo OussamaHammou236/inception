@@ -1,0 +1,4 @@
+what is docker:
+docker is a tool allow you to run a container in you host
+what is a container:
+think container as a micro virtial machine but is not the same. the virtual machine load a lot of file system and softwors opposite of container who load just what you need if you want  to run a bash in example, the virtial machin install a debian and a lot of thinks like firfox - google... when the container install just a debian and bash   
