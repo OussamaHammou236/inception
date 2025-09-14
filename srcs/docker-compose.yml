@@ -9,8 +9,8 @@ services:
     restart: always
     ports:
       - "443:443"
-      - "442:442"
-      - "441:441"
+      # - "442:442"
+      # - "441:441"
     networks:
       - Inception_net
     volumes:
@@ -69,18 +69,14 @@ services:
       - Inception_net
     volumes:
       - wordpress-data:/var/www/wordpress
-  # static:
-  #   build: 
-  #     context: requirements/bonus/StaticWebsite/
-  #   image: static:static
-  #   container_name: static
-  #   restart: always
-  #   # expose:
-  #   #   - "442"
-  #   # ports:
-  #   #   - "442:442"
-  #   networks:
-  #     - Inception_net
+  static:
+    build: 
+      context: requirements/bonus/StaticWebsite/
+    image: static:static
+    container_name: static
+    restart: always
+    networks:
+      - Inception_net
   # adminer:
   #   build: requirements/bonus/adminer/
   #   image: adminer
