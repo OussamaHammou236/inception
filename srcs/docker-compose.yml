@@ -9,8 +9,7 @@ services:
     restart: always
     ports:
       - "443:443"
-      # - "442:442"
-      # - "441:441"
+      - "441:441"
     networks:
       - Inception_net
     volumes:
@@ -22,8 +21,6 @@ services:
     image: mariadb:mariadb
     container_name: mariadb
     restart: always
-    # ports:
-    #   - "3306"
     networks:
       - Inception_net
     volumes:
@@ -37,8 +34,6 @@ services:
     image: wordpress:wordpress
     container_name: wordpress
     restart: always
-    # ports:
-    #   - "9000"
     networks:
       - Inception_net
     volumes:
@@ -49,8 +44,6 @@ services:
     image: redis:redis
     container_name: redis
     restart: always
-    # ports:
-    #   - "6379"
     networks:
       - Inception_net
   ftp:
@@ -63,8 +56,6 @@ services:
     ports:
       - "21:21"
       - "21000-21010:21000-21010"
-    # depends_on:
-    #   - wordpress
     networks:
       - Inception_net
     volumes:
@@ -77,15 +68,15 @@ services:
     restart: always
     networks:
       - Inception_net
-  # adminer:
-  #   build: requirements/bonus/adminer/
-  #   image: adminer
-  #   container_name: adminer
-  #   restart: always
-  #   networks:
-  #     - Inception_net
-  #   volumes:
-  #     - wordpress-data:/var/www/html
+  adminer:
+    build: requirements/bonus/adminer/
+    image: adminer
+    container_name: adminer
+    restart: always
+    networks:
+      - Inception_net
+    volumes:
+      - volume:/var/lib/mysql
 
 networks:
   Inception_net:
