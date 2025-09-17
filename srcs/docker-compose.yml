@@ -77,6 +77,16 @@ services:
       - Inception_net
     volumes:
       - volume:/var/lib/mysql
+  mailhog:
+    build: requirements/bonus/MailHog/
+    image: mailhog:mailhog
+    container_name: mailhog
+    restart: always
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+    networks:
+      - Inception_net
 
 networks:
   Inception_net:

@@ -102,12 +102,31 @@ redis_configuration()
 
 }
 
+mailhog_configuration()
+{
+	echo "Configuring MailHog..."
+	wp config set WP_MAIL_SMTP_CUSTOM_MAILER 'other' --type=constant --allow-root --path="/var/www/wordpress"
+	wp config set WP_MAIL_SMTP_FROM_NAME "$WP_ADMIN_NAME" --type=constant --allow-root --path="/var/www/wordpress"
+	wp config set WP_MAIL_SMTP_FROM_EMAIL "$WP_ADMIN_MAIL" --type=constant --allow-root --path="/var/www/wordpress"
+	wp config set WP_MAIL_SMTP_HOST 'MailHog' --type=constant --allow-root --path="/var/www/wordpress"
+	wp config set WP_MAIL_SMTP_PORT 1025 --raw --type=constant --allow-root --path="/var/www/wordpress"
+	wp config set WP_MAIL_SMTP_AUTO_TLS false --raw --type=constant --allow-root --path="/var/www/wordpress"
+	echo "MailHog Configuration Completed!"
+}
+
+# wp config set SMTP_HOST 'mailhog' --raw --type=constant --allow-root
+# wp config set SMTP_PORT 1025 --raw --type=constant --allow-root
+# wp config set SMTP_USER '' --raw --type=constant --allow-root
+# wp config set SMTP_PASS '' --raw --type=constant --allow-root
+# wp config set SMTP_SECURE null --raw --type=constant --allow-root
+
 Waiting_for_mariadb
 wordpress_configuration
 installing_core
 creating_user
 Waiting_for_redis
 redis_configuration
+mailhog_configuration
 
 echo "Starting PHP-FPM..."
 mkdir -p /run/php
