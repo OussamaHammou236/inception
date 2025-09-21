@@ -15,7 +15,11 @@ services:
     volumes:
       - wordpress-data:/var/www/wordpress
   mariadb:
-    env_file: keys.env
+    env_file:
+      - .env
+      - ../secrets/credentials.txt
+      - ../secrets/db_password.txt
+      - ../secrets/db_root_password.txt
     build:
       context: requirements/mariadb/
     image: mariadb:mariadb
@@ -24,9 +28,13 @@ services:
     networks:
       - Inception_net
     volumes:
-      - volume:/var/lib/mysql
+      - mariadb-data:/var/lib/mysql
   wordpress:
-    env_file: keys.env
+    env_file:
+      - .env
+      - ../secrets/credentials.txt
+      - ../secrets/db_password.txt
+      - ../secrets/db_root_password.txt
     depends_on:
       - mariadb
     build: 
@@ -49,7 +57,11 @@ services:
   ftp:
     build:
       context: requirements/bonus/FTP/
-    env_file: keys.env
+    env_file:
+      - .env
+      - ../secrets/credentials.txt
+      - ../secrets/db_password.txt
+      - ../secrets/db_root_password.txt
     image: ftp:ftp
     container_name: ftp
     restart: always
@@ -70,13 +82,13 @@ services:
       - Inception_net
   adminer:
     build: requirements/bonus/adminer/
-    image: adminer
+    image: adminer:adminer
     container_name: adminer
     restart: always
     networks:
       - Inception_net
     volumes:
-      - volume:/var/lib/mysql
+      - mariadb-data:/var/lib/mysql
   mailhog:
     build: requirements/bonus/MailHog/
     image: mailhog:mailhog
@@ -93,15 +105,15 @@ networks:
     driver: bridge
 
 volumes:
-  volume:
+  mariadb-data:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /home/ohammou-/volume/mariadb
+      device: /home/ohammou-/data/mariadb
   wordpress-data:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /home/ohammou-/volume/wordpress
+      device: /home/ohammou-/data/wordpress

@@ -1,16 +1,3 @@
-# FROM debian:bullseye
-
-# RUN apt-get update && apt-get install -y \
-#     golang-go \
-#     git \
-#     ca-certificates \
-#     && rm -rf /var/lib/apt/lists/*
-
-# RUN go install github.com/mailhog/MailHog@latest \
-#     && go install github.com/mailhog/mhsendmail@latest
-
-# EXPOSE 1025 8025
-
 FROM debian:bullseye
 
 RUN apt-get update && apt-get install -y wget ca-certificates

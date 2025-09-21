@@ -24,11 +24,9 @@ Waiting_for_redis()
 	echo "Redis Connection Successful!"
 }
 
-sleep 5
-
 wordpress_configuration()
 {
-	sleep 5
+	sleep 5;
 	echo "Configuring WordPress..."
 	wp config create --allow-root \
 	--dbname=$MYSQL_DATABASE \
@@ -113,12 +111,6 @@ mailhog_configuration()
 	wp config set WP_MAIL_SMTP_AUTO_TLS false --raw --type=constant --allow-root --path="/var/www/wordpress"
 	echo "MailHog Configuration Completed!"
 }
-
-# wp config set SMTP_HOST 'mailhog' --raw --type=constant --allow-root
-# wp config set SMTP_PORT 1025 --raw --type=constant --allow-root
-# wp config set SMTP_USER '' --raw --type=constant --allow-root
-# wp config set SMTP_PASS '' --raw --type=constant --allow-root
-# wp config set SMTP_SECURE null --raw --type=constant --allow-root
 
 Waiting_for_mariadb
 wordpress_configuration
