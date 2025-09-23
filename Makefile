@@ -1,12 +1,17 @@
-run:
-	docker compose -f srcs/docker-compose.yml up -d --build
+COMPOSE_PATH = srcs/docker-compose.yml
 
-clean:
-	docker compose -f srcs/docker-compose.yml down
+up:
+	docker compose -f $(COMPOSE_PATH) up -d --build
+
+down:
+	docker compose -f $(COMPOSE_PATH) down
+
+logs:
+	docker compose -f $(COMPOSE_PATH) logs
 
 fclean:
-	docker compose -f srcs/docker-compose.yml down --volumes --rmi all
-	sudo rm -rf /home/ohammou-/data/wordpress/*
-	sudo rm -rf /home/ohammou-/data/mariadb/*
+	docker compose -f $(COMPOSE_PATH) down --volumes --rmi all
+	rm -rf /home/ohammou-/data/wordpress/*
+	rm -rf /home/ohammou-/data/mariadb/*
 
-re: fclean run
+re: fclean up
