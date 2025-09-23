@@ -10,11 +10,7 @@ RUN 	openssl req -x509 -nodes \
 			-out /etc/nginx/ssl/inception.crt \
 			-subj "/C=FR/ST=IDF/L=1337/O=42/OU=42/CN=UserName.42.fr/UID=UserName"
 
-COPY tools/script.sh /home/script.sh
-
-RUN chmod +x /home/script.sh
-
 EXPOSE 443
 
-CMD ["/home/script.sh"]
+CMD ["nginx", "-g", "daemon off;"]
 
