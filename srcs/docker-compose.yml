@@ -1,7 +1,6 @@
 services:
   nginx:
-    build:
-      context: requirements/nginx/
+    build: requirements/nginx/
     image: nginx:nginx
     depends_on:
       - mariadb
@@ -14,14 +13,9 @@ services:
     volumes:
       - wordpress-data:/var/www/wordpress
   mariadb:
-    env_file:
-      - .env
-      - ../secrets/credentials.txt
-      - ../secrets/db_password.txt
-      - ../secrets/db_root_password.txt
-    build:
-      context: requirements/mariadb/
-    image: mariadb:mariadb
+    env_file: .env
+    build: requirements/mariadb/
+    image: mariadb
     container_name: mariadb
     restart: always
     networks:
@@ -29,16 +23,11 @@ services:
     volumes:
       - mariadb-data:/var/lib/mysql
   wordpress:
-    env_file:
-      - .env
-      - ../secrets/credentials.txt
-      - ../secrets/db_password.txt
-      - ../secrets/db_root_password.txt
+    env_file: .env
     depends_on:
       - mariadb
-    build: 
-      context: requirements/wordpress/
-    image: wordpress:wordpress
+    build: requirements/wordpress/
+    image: wordpress
     container_name: wordpress
     restart: always
     networks:
@@ -46,22 +35,16 @@ services:
     volumes:
       - wordpress-data:/var/www/wordpress
   redis:
-    build: 
-      context: requirements/bonus/redis/
-    image: redis:redis
+    build: requirements/bonus/redis/
+    image: redis
     container_name: redis
     restart: always
     networks:
       - Inception
   ftp:
-    build:
-      context: requirements/bonus/FTP/
-    env_file:
-      - .env
-      - ../secrets/credentials.txt
-      - ../secrets/db_password.txt
-      - ../secrets/db_root_password.txt
-    image: ftp:ftp
+    build: requirements/bonus/FTP/
+    env_file: .env
+    image: ftp
     container_name: ftp
     restart: always
     ports:
@@ -72,16 +55,15 @@ services:
     volumes:
       - wordpress-data:/var/www/wordpress
   static:
-    build: 
-      context: requirements/bonus/StaticWebsite/
-    image: static:static
+    build: requirements/bonus/StaticWebsite/
+    image: static
     container_name: static
     restart: always
     networks:
       - Inception
   adminer:
     build: requirements/bonus/adminer/
-    image: adminer:adminer
+    image: adminer
     container_name: adminer
     restart: always
     networks:
@@ -90,7 +72,7 @@ services:
       - mariadb-data:/var/lib/mysql
   mailhog:
     build: requirements/bonus/MailHog/
-    image: mailhog:mailhog
+    image: mailhog
     container_name: mailhog
     restart: always
     ports:

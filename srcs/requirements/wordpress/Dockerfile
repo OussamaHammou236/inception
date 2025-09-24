@@ -1,6 +1,5 @@
 FROM    debian:bullseye
 
-# RUN     apt install -y wget php php-fpm php-mysql mariadb-client
 RUN apt-get update && apt-get install -y \
     wget \
     php \
